@@ -1,11 +1,10 @@
-const express=require("express")
-const userController=require("../controller/userController")
-const userRoute=Router()
+const express = require("express");
+const userController = require("../controller/userController");
+const userRoute = express.Router();
 
+userRoute.use(express.json());
 
-//signup route
-userRoute.post("/signup",userController.signupUser)
+// Signup route
+userRoute.post("/signup", userController.signupUser);
 
-module.exports={
-    userRoute
-}
+module.exports = userRoute;

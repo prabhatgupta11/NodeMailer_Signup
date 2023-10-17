@@ -1,29 +1,52 @@
-const {UserModel}=require("../model/userModel")
-const bcrypt = require('bcrypt');
+const  UserModel  = require("../model/userModel");
+const nodemailer = require("nodemailer");
+require('dotenv').config()
+const bcrypt = require("bcrypt");
 
-const signupUser=async (req,res)=>{
-    try{
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "guptajim3636@gmail.com",
+    pass: process.env.pass,
+  },
+});
 
-        const {email,password}=req.body;
-        const already= await UserModel.findOne({email})
-        if(already)
-        {
-           return res.status(400).json("Email already Register! Please Login. ")
-        }
+const sendWelcomeEmail = async (email) => {
+  const mailOptions = {
+    from: "guptajim3636@gmail.com",
+    to: email,
+    subject: "Welcome to our platform!",
+    text: "Thank you for signing up. We are excited to have you on board!",
+  };
 
-        const hashpass=await bcrypt.hash(password,10)
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Welcome email sent successfully.");
+  } catch (error) {
+    console.error("Error sending welcome email:", error);
+  }
+};
 
-        const user= new UserModel({email,hashpass})
-        await user.save();
-        res.status(201).json("Register Sucess",user)
+const signupUser = async (req, res) => {
+  try {
+    console.log(44, req.body);
 
+    const { email, password } = req.body;
 
-    }catch(err)
-    {
-        res.status(401).json(err.message)
-    }
-}
+    const hashpass = await bcrypt.hash(password, 10);
 
-module.exports={
-    signupUser
-}
+    const user = new UserModel({ email, password: hashpass });
+    await user.save();
+    
+    // Send welcome email
+  await sendWelcomeEmail(email);
+
+    res.status(201).json({ message: "Registration successful", user });
+  } catch (err) {
+    res.status(401).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  signupUser,
+};
