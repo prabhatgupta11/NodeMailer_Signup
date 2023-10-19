@@ -1,9 +1,15 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const connection = mongoose.connect("mongodb+srv://prabhat:prabhat@cluster0.nob5hjt.mongodb.net/Signup_NodeMailer?retryWrites=true&w=majority", {
+mongoose.connect(process.env.mongodb, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 10000, // Increase the server selection timeout (if needed)
+});
+
+const connection = mongoose.connection;
+connection.on("error", (err) => {
+  console.error("MongoDB connection error:", err);
 });
 
 module.exports = {

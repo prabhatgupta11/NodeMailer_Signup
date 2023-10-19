@@ -6,11 +6,11 @@ const app=express();
 
 app.use("/api",userRoute)
 
-app.listen(process.env.PORT,async()=>{
+app.listen(8001,async()=>{
     try{
         await connection;
         console.log("connect to database")
-        console.log(`Server Is Running at ${PORT}`)
+        console.log(`Server Is Running at ${8001}`)
 
     }catch(err)
     {
