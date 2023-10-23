@@ -47,6 +47,17 @@ const signupUser = async (req, res) => {
   }
 };
 
+const getdata = async (req, res) => {
+  try {
+    const user = await UserModel.find()
+
+    res.status(201).json({user});
+  } catch (err) {
+    res.status(401).json({ message: err.message });
+  }
+};
+
 module.exports = {
   signupUser,
+  getdata
 };

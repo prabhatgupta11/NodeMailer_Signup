@@ -6,5 +6,6 @@ userRoute.use(express.json());
 
 // Signup route
 userRoute.post("/signup", userController.signupUser);
+userRoute.get("/getdata", userController.getdata);
 
 module.exports = userRoute;
