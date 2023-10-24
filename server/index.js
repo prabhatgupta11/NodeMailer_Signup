@@ -5,6 +5,7 @@ const  userRoute  = require("./route/userRouter");
 require("dotenv").config();
 const app=express();
 
+//database connection
 
 mongoose.connect("mongodb+srv://prabhat:prabhat@cluster0.nob5hjt.mongodb.net/testing1?retryWrites=true&w=majority", {
   useNewUrlParser: true,
