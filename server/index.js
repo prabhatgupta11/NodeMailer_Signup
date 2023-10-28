@@ -7,7 +7,7 @@ const app=express();
 
 //database connection
 
-mongoose.connect("mongodb+srv://prabhat:prabhat@cluster0.nob5hjt.mongodb.net/testing1?retryWrites=true&w=majority", {
+mongoose.connect(`mongodb+srv://prabhat:${process.env.passs}@cluster0.nob5hjt.mongodb.net/testing1?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
